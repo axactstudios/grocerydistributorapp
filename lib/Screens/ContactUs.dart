@@ -1,19 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:call_number/call_number.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grocerydistributorapp/Classes/Constants.dart';
-import 'package:grocerydistributorapp/Screens/ContactUs.dart';
-import 'package:grocerydistributorapp/Screens/LoginPage.dart';
-import 'package:grocerydistributorapp/Screens/MyShops.dart';
-import 'package:grocerydistributorapp/Screens/SendInvites.dart';
+import 'package:intent/extra.dart';
+import 'package:intent/intent.dart' as intent;
+import 'package:intent/action.dart' as action;
 
-class HomePage extends StatefulWidget {
+class ContactUs extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _ContactUsState createState() => _ContactUsState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ContactUsState extends State<ContactUs> {
   @override
   Widget build(BuildContext context) {
     final pHeight = MediaQuery.of(context).size.height;
@@ -23,16 +23,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: kSecondaryColor,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.power_settings_new,
-              color: kSecondaryColor,
-            ),
-          ),
           Expanded(
             child: Center(
               child: Text(
-                'Grocery Distributor App',
+                'Contact Us',
                 style: GoogleFonts.poppins(
                   textStyle:
                       TextStyle(color: Colors.white, fontSize: pHeight * 0.025),
@@ -40,21 +34,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          IconButton(
-            icon: Icon(
-              Icons.power_settings_new,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoginPage(),
-                ),
-              );
-            },
-          )
         ],
       ),
       body: Padding(
@@ -65,13 +44,8 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => MyShops(),
-                    ),
-                  );
+                onTap: () async {
+                  await new CallNumber().callNumber('+919027553376');
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -85,14 +59,58 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: <Widget>[
                           Image.asset(
-                            'images/shop(1).png',
+                            'images/phone.png',
                             scale: 3.25,
                           ),
                           SizedBox(
                             height: pHeight * 0.01,
                           ),
                           Text(
-                            'My referred shops',
+                            'Phone',
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: pHeight * 0.025,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () async {
+                  final Email email = Email(
+                    body: 'Write your message',
+                    subject: 'Grocery distributor app',
+                    recipients: ['vkumarsaraswat@gmail.com'],
+                    isHTML: false,
+                  );
+
+                  await FlutterEmailSender.send(email);
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: kSecondaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Container(
+                      width: double.infinity,
+                      child: Column(
+                        children: <Widget>[
+                          Image.asset(
+                            'images/gmail.png',
+                            scale: 3.25,
+                          ),
+                          SizedBox(
+                            height: pHeight * 0.01,
+                          ),
+                          Text(
+                            'E-mail',
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                   color: Colors.white,
@@ -108,12 +126,8 @@ class _HomePageState extends State<HomePage> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => SendInvites(),
-                    ),
-                  );
+                  FlutterOpenWhatsapp.sendSingleMessage(
+                      "919027553376", "Hello");
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -127,56 +141,14 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: <Widget>[
                           Image.asset(
-                            'images/heart.png',
+                            'images/whatsapp.png',
                             scale: 3.25,
                           ),
                           SizedBox(
                             height: pHeight * 0.01,
                           ),
                           Text(
-                            'Send Invites',
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: pHeight * 0.025,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => ContactUs(),
-                    ),
-                  );
-                },
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: kSecondaryColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Container(
-                      width: double.infinity,
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            'images/contact-us.png',
-                            scale: 3.25,
-                          ),
-                          SizedBox(
-                            height: pHeight * 0.01,
-                          ),
-                          Text(
-                            'Contact Us',
+                            'WhatsApp',
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                   color: Colors.white,
