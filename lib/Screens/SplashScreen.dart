@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     new Future.delayed(Duration(seconds: 3), () {
       User user = mAuth.currentUser;
-      if (user.uid == null) {
+      if (user == null) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
