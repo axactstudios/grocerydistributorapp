@@ -1,12 +1,9 @@
-import 'package:call_number/call_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grocerydistributorapp/Classes/Constants.dart';
-import 'package:intent/extra.dart';
-import 'package:intent/intent.dart' as intent;
-import 'package:intent/action.dart' as action;
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUs extends StatefulWidget {
   @override
@@ -45,7 +42,7 @@ class _ContactUsState extends State<ContactUs> {
             children: <Widget>[
               InkWell(
                 onTap: () async {
-                  await new CallNumber().callNumber('+919027553376');
+                  await launch('tel://+919027553376');
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(
