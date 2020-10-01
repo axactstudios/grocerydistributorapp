@@ -23,6 +23,7 @@ dependencies:
   open_mail_app: ^0.0.3
   flutter_email_sender: ^3.0.1
   flutter_spinkit: ^4.1.2+1
+  flutter_automation: ^1.4.0
 
 dev_dependencies:
   flutter_test:
